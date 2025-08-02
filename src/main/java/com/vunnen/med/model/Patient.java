@@ -19,6 +19,6 @@ public class Patient {
     private String address;
     private String phone;
     private String secondPhone;
-
+    private Appointment appointment; //TODO: check if it's list or only one appointment
 
 }

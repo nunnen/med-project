@@ -1,9 +1,15 @@
 package com.vunnen.med.model;
 
+import lombok.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Appointment {
     private long id;
     private String priority; //TODO: check if it's ENUM of smth like comment
@@ -21,4 +27,19 @@ public class Appointment {
     private boolean approved;
     private boolean visited;
 
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", priority='" + priority + '\'' +
+                ", appointmentDateTime=" + appointmentDateTime +
+                ", appointmentDate=" + appointmentDate +
+                ", appointmentTime=" + appointmentTime +
+                ", comment='" + comment + '\'' +
+                ", diagnosis='" + diagnosis + '\'' +
+                ", visualAcuity=" + visualAcuity +
+                ", approved=" + approved +
+                ", visited=" + visited +
+                '}';
+    }
 }
