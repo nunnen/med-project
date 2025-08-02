@@ -11,12 +11,17 @@ import java.util.Map;
 public class PatientRepository {
     private final Map<Long, Patient> patients;
     private final FakerUtil faker = FakerUtil.getInstance();
+    private static final PatientRepository INSTANCE = new PatientRepository();
     private long id;
 
-    public PatientRepository() {
+    private PatientRepository() {
         patients = new HashMap<>();
-        List<Patient> patients = faker.createFakePatients(100);
+        List<Patient> patients = faker.createFakePatients(15);
         patients.forEach(this::save);
+    }
+
+    public static PatientRepository getInstance() {
+        return INSTANCE;
     }
 
     public void save(Patient patient) {
