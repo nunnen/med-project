@@ -1,18 +1,26 @@
 package com.vunnen.med.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Data
-@Builder
-@AllArgsConstructor
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "")
 public class Appointment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String priority; //TODO: check if it's ENUM of smth like comment
+
+    @OneToOne
     private Patient patient;
 
     private LocalDateTime appointmentDateTime;

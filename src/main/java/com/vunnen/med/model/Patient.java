@@ -1,13 +1,19 @@
 package com.vunnen.med.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-@Data
-@Builder
-@AllArgsConstructor
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
+@Builder
+@Table(name = "")
 public class Patient {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String surname;
@@ -19,6 +25,8 @@ public class Patient {
     private String address;
     private String phone;
     private String secondPhone;
+
+    @OneToOne
     private Appointment appointment; //TODO: check if it's list or only one appointment
 
 }

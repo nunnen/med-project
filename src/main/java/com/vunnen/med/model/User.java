@@ -1,13 +1,19 @@
 package com.vunnen.med.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-@Data
-@Builder
-@AllArgsConstructor
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
+@Builder
+@Table(name = "")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Role role;
     private String username;
