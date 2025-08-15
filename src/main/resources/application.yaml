@@ -1,0 +1,4 @@
+spring.application.name: med
+server.port: 8080
+spring.output.ansi.enabled: ALWAYS
+
