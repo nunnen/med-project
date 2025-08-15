@@ -4,8 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Builder
+@AllArgsConstructor
 public class User {
     private long id;
     private Role role;
