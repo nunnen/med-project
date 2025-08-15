@@ -13,7 +13,8 @@ import java.time.LocalTime;
 @Builder
 public class Appointment {
     private long id;
-    private Priority priority; //TODO: check if it's ENUM of smth like comment
+    private Priority priority;//TODO: check if it's ENUM of smth like comment
+    private boolean booked;
 
     private String appointmentType; //TODO: check if it's should be ENUM or String
     private Department department;
