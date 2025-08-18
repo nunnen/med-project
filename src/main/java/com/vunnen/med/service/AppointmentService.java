@@ -31,15 +31,15 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
-    public void createNewAppointment(Appointment appointment) {
+    public Appointment createNewAppointment(Appointment appointment) {
         log.info("Create new appointment");
-        appointmentRepository.create(appointment);
+        return appointmentRepository.create(appointment);
     }
 
-    public void updateAppointment(Long appointmentId) {
+    public Appointment updateAppointment(Long appointmentId) {
         log.info("Update appointment with id {}", appointmentId);
-        Optional<Appointment> appointment = appointmentRepository.find(appointmentId);
-        appointment.ifPresent(appointmentRepository::update);
+        Appointment appointment = appointmentRepository.get(appointmentId);
+        return appointmentRepository.update(appointment);
     }
 
     public void deleteAppointment(Long appointmentId) {
@@ -49,27 +49,27 @@ public class AppointmentService {
 
     public void bookAppointment(Long appointmentId) {
         log.info("Book appointment {}", appointmentId);
-        Optional<Appointment> appointment = appointmentRepository.find(appointmentId);
+        Appointment appointment = appointmentRepository.get(appointmentId);
 
-        appointment.ifPresent(ap -> ap.setBooked(true));
+        appointment.setBooked(true);
     }
 
     public void unbookAppointment(Long appointmentId) {
         log.info("Unbook appointment {}", appointmentId);
-        Optional<Appointment> appointment = appointmentRepository.find(appointmentId);
+        Appointment appointment = appointmentRepository.get(appointmentId);
 
-        appointment.ifPresent(ap -> ap.setBooked(false));
+        appointment.setBooked(false);
     }
 
     public void editAppointmentComment(Long appointmentId, String comment) {
         log.info("Edit appointment comment {}", appointmentId);
-        Optional<Appointment> appointment = appointmentRepository.find(appointmentId);
-        appointment.ifPresent(ap -> ap.setComment(comment));
+        Appointment appointment = appointmentRepository.get(appointmentId);
+        appointment.setComment(comment);
     }
 
     public void editAppointmentType(Long appointmentId, String type) {
         log.info("Edit appointment type {}", appointmentId);
-        Optional<Appointment> appointment = appointmentRepository.find(appointmentId);
-        appointment.ifPresent(ap -> ap.setAppointmentType(type));
+        Appointment appointment = appointmentRepository.get(appointmentId);
+        appointment.setAppointmentType(type);
     }
 }

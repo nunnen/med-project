@@ -13,16 +13,25 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private long nextId = 1L;
 
-    public void createNewUser(User user) {
+    public User createNewUser(User user) {
+        user.setId(nextId++);
         log.info("save user: {}", user.getId());
         userRepository.create(user);
+        return user;
     }
 
-    public void deleteUser(Long userId) {
-        log.info("delete user: {}", userId);
+    public boolean deleteUser(Long userId) {
+        log.info("delete user-{}", userId);
         Optional<User> user = userRepository.find(userId);
-        user.ifPresentOrElse(u -> userRepository.delete(userId),
-                () -> log.error("user with id {} not found", userId));
+        if (user.isPresent()) {
+            userRepository.delete(userId);
+            return true;
+        }
+        else {
+            log.info("user-{} not found", userId);
+            return false;
+        }
     }
 }
