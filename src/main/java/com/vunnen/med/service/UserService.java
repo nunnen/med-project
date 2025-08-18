@@ -13,13 +13,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private long nextId = 1L;
 
     public User createNewUser(User user) {
-        user.setId(nextId++);
         log.info("save user: {}", user.getId());
-        userRepository.create(user);
-        return user;
+        return userRepository.create(user);
     }
 
     public boolean deleteUser(Long userId) {
