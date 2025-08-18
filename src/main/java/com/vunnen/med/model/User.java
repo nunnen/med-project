@@ -6,6 +6,7 @@ import lombok.*;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private long id;
     private Role role;
