@@ -32,7 +32,7 @@ class UserServiceTest {
 
     @Test
     void createNewUser() {
-        doReturn(true).when(userRepository).create(ADMIN);
+        doReturn(ADMIN).when(userRepository).create(ADMIN);
 
         assertThat(userService.createNewUser(ADMIN)).isEqualTo(ADMIN);
 
