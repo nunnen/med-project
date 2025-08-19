@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class Appointment {
     private long id;
     private Priority priority;//TODO: check if it's ENUM of smth like comment

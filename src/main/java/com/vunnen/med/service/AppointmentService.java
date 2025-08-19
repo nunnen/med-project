@@ -15,61 +15,48 @@ import java.util.Optional;
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
 
-    public Appointment getAppointment(Long appointmentId) {
-        log.info("Get appointment with id {}", appointmentId);
-        Optional<Appointment> appointment = appointmentRepository.find(appointmentId);
-        if (appointment.isPresent()) {
-            return appointment.get();
-        } else {
-            log.error("Appointment with id {} not found", appointmentId);
-            return null;
-        }
+    public Optional<Appointment> findById(Long appointmentId) {
+        log.info("Find appointment with id {}", appointmentId);
+        return appointmentRepository.find(appointmentId);
     }
 
-    public List<Appointment> getAllAppointments() {
-        log.info("Get all appointments");
+    public List<Appointment> findAll() {
+        log.info("Find all appointments");
         return appointmentRepository.findAll();
     }
 
-    public Appointment createNewAppointment(Appointment appointment) {
+    public Appointment create(Appointment appointment) {
         log.info("Create new appointment");
         return appointmentRepository.create(appointment);
     }
 
-    public Appointment updateAppointment(Long appointmentId) {
+    public Optional<Appointment> updateAppointment(Long appointmentId, Appointment updatedAppointment) {
         log.info("Update appointment with id {}", appointmentId);
-        Appointment appointment = appointmentRepository.get(appointmentId);
-        return appointmentRepository.update(appointment);
+        return appointmentRepository.find(appointmentId)
+                .map(appointment -> {
+                    appointment.setPriority(updatedAppointment.getPriority());
+                    appointment.setBooked(updatedAppointment.isBooked());
+                    appointment.setAppointmentType(updatedAppointment.getAppointmentType());
+                    appointment.setDepartment(updatedAppointment.getDepartment());
+                    appointment.setPatient(updatedAppointment.getPatient());
+                    appointment.setAppointmentDateTime(updatedAppointment.getAppointmentDateTime());
+                    appointment.setAppointmentTime(updatedAppointment.getAppointmentTime());
+                    appointment.setAppointmentDate(updatedAppointment.getAppointmentDate());
+                    appointment.setComment(updatedAppointment.getComment());
+                    appointment.setDiagnosis(updatedAppointment.getDiagnosis());
+                    appointment.setApproved(updatedAppointment.isApproved());
+                    appointment.setVisited(updatedAppointment.isVisited());
+                    return appointment;
+                });
     }
 
-    public void deleteAppointment(Long appointmentId) {
+    public boolean deleteAppointment(Long appointmentId) {
         log.info("Delete appointment {}", appointmentId);
-        appointmentRepository.delete(appointmentId);
-    }
-
-    public void bookAppointment(Long appointmentId) {
-        log.info("Book appointment {}", appointmentId);
-        Appointment appointment = appointmentRepository.get(appointmentId);
-
-        appointment.setBooked(true);
-    }
-
-    public void unbookAppointment(Long appointmentId) {
-        log.info("Unbook appointment {}", appointmentId);
-        Appointment appointment = appointmentRepository.get(appointmentId);
-
-        appointment.setBooked(false);
-    }
-
-    public void editAppointmentComment(Long appointmentId, String comment) {
-        log.info("Edit appointment comment {}", appointmentId);
-        Appointment appointment = appointmentRepository.get(appointmentId);
-        appointment.setComment(comment);
-    }
-
-    public void editAppointmentType(Long appointmentId, String type) {
-        log.info("Edit appointment type {}", appointmentId);
-        Appointment appointment = appointmentRepository.get(appointmentId);
-        appointment.setAppointmentType(type);
+        return appointmentRepository.find(appointmentId)
+                .map(appointment -> {
+                    appointmentRepository.delete(appointmentId);
+                    return true;
+                })
+                .orElse(false);
     }
 }

@@ -23,7 +23,7 @@ class UserServiceTest {
             .role(Role.ADMIN)
             .build();
 
-    private final Long ADMIN_ID = 1L;
+    private static final Long ADMIN_ID = 1L;
 
     @Mock
     private UserRepository userRepository;
@@ -31,18 +31,18 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    void createNewUser() {
+    void create() {
         doReturn(ADMIN).when(userRepository).create(ADMIN);
 
-        assertThat(userService.createNewUser(ADMIN)).isEqualTo(ADMIN);
+        assertThat(userService.create(ADMIN)).isEqualTo(ADMIN);
 
         verify(userRepository, times(1)).create(ADMIN);
     }
 
     @Test
-    void deleteUser() {
+    void delete() {
         doReturn(Optional.of(ADMIN)).when(userRepository).find(ADMIN_ID);
 
-        assertThat(userService.deleteUser(ADMIN_ID)).isEqualTo(true);
+        assertThat(userService.delete(ADMIN_ID)).isEqualTo(true);
     }
 }

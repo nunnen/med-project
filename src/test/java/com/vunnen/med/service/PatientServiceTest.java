@@ -13,7 +13,7 @@ import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class PatientServiceTest {
-    private final Patient PATIENT = Patient.builder()
+    private final static Patient PATIENT = Patient.builder()
             .name("patient")
             .build();
     @Mock
@@ -22,10 +22,10 @@ class PatientServiceTest {
     private PatientService patientService;
 
     @Test
-    void addNewPatient() {
+    void create() {
         doReturn(PATIENT).when(patientRepository).create(PATIENT);
 
-        patientService.addNewPatient(PATIENT);
+        patientService.create(PATIENT);
 
         assertThat(PATIENT.getName()).isEqualTo("patient");
     }

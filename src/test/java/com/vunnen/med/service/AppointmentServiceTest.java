@@ -22,7 +22,7 @@ class AppointmentServiceTest {
     @InjectMocks
     private AppointmentService appointmentService;
 
-    private final Appointment APPOINTMENT = Appointment.builder()
+    private final static Appointment APPOINTMENT = Appointment.builder()
             .booked(false)
             .appointmentType("eyes")
             .patient(new Patient())
@@ -32,32 +32,38 @@ class AppointmentServiceTest {
     private final Long APPOINTMENT_ID = 1L;
 
     @Test
-    void getAppointment() {
+    void find() {
         doReturn(Optional.of(APPOINTMENT)).when(appointmentRepository).find(APPOINTMENT_ID);
 
-        assertThat(appointmentService.getAppointment(APPOINTMENT_ID)).isEqualTo(APPOINTMENT);
+        assertThat(appointmentService.findById(APPOINTMENT_ID)).isEqualTo(Optional.of(APPOINTMENT));
     }
 
     @Test
-    void getAllAppointments() {
+    void findAll() {
         doReturn(List.of(APPOINTMENT)).when(appointmentRepository).findAll();
 
-        assertThat(appointmentService.getAllAppointments()).isNotEmpty();
-        assertThat(appointmentService.getAllAppointments()).hasSize(1);
+        assertThat(appointmentService.findAll()).isNotEmpty();
+        assertThat(appointmentService.findAll()).hasSize(1);
     }
 
     @Test
-    void createNewAppointment() {
+    void create() {
         doReturn(APPOINTMENT).when(appointmentRepository).create(APPOINTMENT);
 
-        assertThat(appointmentService.createNewAppointment(APPOINTMENT)).isEqualTo(APPOINTMENT);
+        assertThat(appointmentService.create(APPOINTMENT)).isEqualTo(APPOINTMENT);
     }
 
     @Test
-    void updateAppointment() {
-        doReturn(APPOINTMENT).when(appointmentRepository).get(APPOINTMENT_ID);
-        doReturn(APPOINTMENT).when(appointmentRepository).update(APPOINTMENT);
+    void update() {
+        Appointment updatedAppointment = Appointment.builder()
+                .booked(true)
+                .appointmentType("eyes")
+                .patient(new Patient())
+                .comment("comment2")
+                .build();
 
-        assertThat(appointmentService.updateAppointment(APPOINTMENT_ID)).isEqualTo(APPOINTMENT);
+        doReturn(Optional.of(APPOINTMENT)).when(appointmentRepository).find(APPOINTMENT_ID);
+
+        assertThat(appointmentService.updateAppointment(APPOINTMENT_ID, updatedAppointment)).isEqualTo(Optional.of(updatedAppointment));
     }
 }

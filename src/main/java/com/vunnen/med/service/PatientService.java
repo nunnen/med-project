@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class PatientService {
     private final PatientRepository patientRepository;
 
-    public Patient addNewPatient(Patient patient) {
-        log.info("Add new patient {}", patient);
+    public Patient create(Patient patient) {
+        log.info("Create user");
         return patientRepository.create(patient);
     }
 }

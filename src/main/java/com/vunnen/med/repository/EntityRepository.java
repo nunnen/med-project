@@ -18,17 +18,8 @@ public abstract class EntityRepository<T> {
         return Optional.ofNullable(repository.get(id));
     }
 
-    public T get(long id) {
-        return repository.get(id);
-    }
-
     public List<T> findAll() {
         return new ArrayList<>(repository.values());
-    }
-
-    public T update(T entity) {
-        repository.put(nextId, entity);
-        return entity;
     }
 
     public void delete(long id) {
