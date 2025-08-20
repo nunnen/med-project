@@ -5,3 +5,8 @@ spring.output.ansi.enabled: ALWAYS
 logging:
   level:
     root: info
+spring:
+  mvc:
+    format:
+      date: iso
+      date-time: iso
